@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MTConnect Graphr, from System Insights Inc.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A WebBased Utility to Monitor an MTConnect Stream">
+    <meta name="author" content="">
+
+    <!-- styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet' type='text/css'>
+    <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href='assets/css/style.css' rel='stylesheet' type='text/css'>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/img/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/img/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-57-precomposed.png">
+
+	<!-- Javascript -->	
+	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.xml2json.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-cookie.js"></script>
+	<script type="text/javascript" src="assets/js/util.js"></script>
+	<script type="text/javascript" src="assets/js/browse.js"></script>
+	<script type="text/javascript" src="assets/js/mtconnect.js"></script>
+	<script type="text/javascript" src="assets/js/smoothie.js"></script>
+
+	<!-- Custom Script for the Home Page -->
+	<script type="text/javascript">
+		var conn_url="agent.mtconnect.org/current";
+		//SETTING UP THE POPUP
+		//0 means disabled; 1 means enabled;
+		var popupStatus = 0;
+
+		//loading popup with jQuery
+		function loadPopup(){
+		//loads popup only if it is disabled
+			if(popupStatus==0){
+				$("#backgroundPopup").css({
+				"opacity": "0.7"
+				});
+				$("#backgroundPopup").fadeIn("slow");
+				$("#popupConnect").fadeIn("slow");
+				popupStatus = 1;
+			}
+		}
+
+		//disabling popup with jQuery
+		function disablePopup(){
+		//disables popup only if it is enabled
+			if(popupStatus==1){
+				$("#backgroundPopup").fadeOut("slow");
+				$("#popupConnect").fadeOut("slow");
+				conn_url=document.getElementById('stream_name').value;
+				popupStatus = 0;
+		
+				//calling the custom.js file only after the stream url has been entered
+		   		var head= document.getElementsByTagName('body')[0];
+   				var script= document.createElement('script');
+  			 	script.type= 'text/javascript';
+  			 	script.src= 'assets/js/custom.js?n=1';
+ 			  	head.appendChild(script);
+			}
+		}
+
+		//centering popup
+		function centerPopup(){
+			//request data for centering
+			var windowWidth = document.documentElement.clientWidth;
+			var windowHeight = document.documentElement.clientHeight;
+			var popupHeight = $("#popupConnect").height();
+			var popupWidth = $("#popupConnect").width();
+			//centering
+			$("#popupConnect").css({
+				"position": "absolute",
+				"top": windowHeight/2-popupHeight/2,
+				"left": windowWidth/2-popupWidth/2
+			});
+			//only need force for IE6
+			$("#backgroundPopup").css({
+				"height": windowHeight
+			});
+		}
+
+
+		//CONTROLLING EVENTS IN jQuery
+		window.onload = function(){
+		//LOADING POPUP
+				centerPopup();
+				loadPopup();
+		
+			//CLOSING POPUP
+			//Click the x event!
+				$("#popupConnectClose").click(function(){
+					disablePopup();
+				});
+			//Click out event!
+				$("#backgroundPopup").click(function(){
+					disablePopup();
+				});
+			//Press Escape event!
+				$(document).keypress(function(e){
+					if(e.keyCode==27 && popupStatus==1){
+						disablePopup();
+					}
+				});
+		};
+	</script>
+
+	<!-- CSS style for the Visual Alarm -->
+	<style>
+		.off{
+			background-image: url('assets/img/light_off.png');
+		}
+
+		.green{
+			background-image: url('assets/img/light_green.png');
+		}
+
+		.red{
+			background-image: url('assets/img/light_red.png');
+		}
+	</style>
+
+  </head>
+
+  <body>
+	<!-- The Top Navigation Bar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">MTConnect Graphr</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="http://www.systeminsights.com" target="_blank">System Insights</a></li>
+              <li><a href="http://www.mtconnect.com" target="_blank">MTConnect</a></li>
+              <li><a href="about.htm" target="_top">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>MTConnect Graphr<sup>Beta</sup></h1>
+      <p>A Web Based Utility to monitor an MTConnect Stream</p>
+
+    </div> <!-- /container -->
+    <div class="container" style="min-height:300px;">
+		<canvas id="mycanvas" width="400" height="50">Canvas Drawing Element not supported on your browser.<br /><a href="http://www.google.com/chrome">Click here to get a browser that does support Canvas <br /></a></canvas>
+	<div class="container" id='SelStats' position='absolute' style="min-height:220px;"><div id='conditions' position='absolute'></div></div>
+	</div>
+
+
+
+
+<div id="popupConnect">
+		<a id="popupConnectClose">x</a>
+        <h3>Connecting to MtConnect Stream</h3>
+			Please enter the link to a mtconnect stream:			<br/>
+			<label>http://<input name="stream_name" type="text" id="stream_name" value="agent.mtconnect.org/current" size="30"><input type="submit" name="Sub_url" id="Sub_url" value="Submit" onClick="conn_url=document.getElementById('stream_name').value;disablePopup();"></label>
+	<br/>
+<br/>
+	</div>
+    <div id="backgroundPopup"></div> 
+
+
+    
+    <div class="container" id="IEWarning" style='{background-color:#FFC0C0;}'></div>
+
+
+<br />
+	<div class="container"  id="bottom">
+		<canvas id="mycanvas2" width="325" height="100" style="visibility:visible;"></canvas>
+		<br />
+		<div id="label1" style="width:200px;height:25px;text-align:center;margin-left:20px;"></div>
+		<label>Max1:
+			<input name="1_max" type="text" id="1_max" size="4">
+		</label>
+		<label>Min1:
+			<input name="1_min" type="text" id="1_min" size="4">
+		</label>
+		<input type="submit" name="Sub_range" id="Sub_range" value="Submit" onClick="updateRange(document.getElementById('1_max').value,document.getElementById('1_min').value)">
+	</div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

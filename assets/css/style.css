@@ -1,0 +1,88 @@
+body{
+	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */}
+.navbar .brand{
+  	font-family: 'Yesteryear', cursive;
+	color: #0D8BFF;
+}
+.navbar .nav > li > a:hover{
+    color: #0D8BFF;
+}
+h1 sup {
+	top: -1.8em;
+	font-size: 15px;
+	font-family: "Arial";
+	font-style: italic;
+	color: #555;
+}
+li {position: relative;}
+ul.menu li,
+	{display: none;}
+ul.menu:hover li,
+	{display: block;}
+li,ul.menu li,
+	{visibility: hidden;
+	 display: none;}
+#mainbox {
+   	margin-left: -301px ;
+	width: 600px;
+	left:50%;
+	position: absolute;
+}
+#SelStats {
+    position:absolute; 
+  	border-radius: 8px;
+    font-size:10pt;
+    overflow-y: auto;
+    width: 320px;
+    height: 210px;
+}
+.hide_cond {display:none;}
+.show_cond {display:block;}
+#light1 {
+  	width: 25px;
+	height:25px;
+	position: absolute;
+}
+#backgroundPopup{  
+	display:none;  
+	position:fixed;  
+	_position:absolute; /* hack for internet explorer 6*/  
+	height:100%;  
+	width:100%;  
+	top:0;  
+	left:0;  
+	background:#000000;  
+	border:1px solid #cecece;  
+	z-index:1;  
+} 
+#popupConnect{  
+	display:none;  
+	position:fixed;  
+	_position:absolute; /* hack for internet explorer 6*/  
+	height:100px;  
+	width:350px;  
+	background:#FFFFFF;  
+	border:2px solid #cecece;  
+	z-index:2;  
+	padding:12px;  
+	font-size:13px;  
+}  
+#popupConnectClose{  
+	font-size:14px;  
+	line-height:14px;  
+	right:6px;  
+	top:4px;  
+	position:absolute;  
+	color:#6fa5fd;  
+	font-weight:700;  
+	display:block;  
+}  
+.navbar .brand {
+	margin-left: 10px;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+	position:fixed;
+}
+.navbar .btn-navbar {
+	margin-right: 15px;
+}
