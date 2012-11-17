@@ -25,7 +25,7 @@
     <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-57-precomposed.png">
 
 	<!-- Javascript -->	
-	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-1.4.4.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.xml2json.js"></script>
 	<script type="text/javascript" src="assets/js/jquery-cookie.js"></script>
 	<script type="text/javascript" src="assets/js/util.js"></script>
@@ -76,13 +76,12 @@
 			//request data for centering
 			var windowWidth = document.documentElement.clientWidth;
 			var windowHeight = document.documentElement.clientHeight;
-			var popupHeight = $("#popupConnect").height();
-			var popupWidth = $("#popupConnect").width();
+			// var popupHeight = $("#popupConnect").height();
+			// var popupWidth = $("#popupConnect").width();
 			//centering
 			$("#popupConnect").css({
-				"position": "absolute",
-				"top": windowHeight/2-popupHeight/2,
-				"left": windowWidth/2-popupWidth/2
+				"top": 50+'%',
+				"left": 50+'%'
 			});
 			//only need force for IE6
 			$("#backgroundPopup").css({
@@ -133,25 +132,16 @@
   </head>
 
   <body>
-	<!-- The Top Navigation Bar -->
-    <div class="navbar navbar-fixed-top">
+	<!-- The Top Navigation Bar -->    
+    <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">MTConnect Graphr</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="http://www.systeminsights.com" target="_blank">System Insights</a></li>
-              <li><a href="http://www.mtconnect.com" target="_blank">MTConnect</a></li>
-              <li><a href="about.htm" target="_top">About</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+    	<a class="brand" href="#">MTConnect Graphr</a>
+    	<ul class="nav">
+		  <li class="active"><a href="#">Home</a></li>
+          <li><a href="http://www.systeminsights.com" target="_blank">System Insights</a></li>
+          <li><a href="http://www.mtconnect.com" target="_blank">MTConnect</a></li>
+          <li><a href="about.htm" target="_top">About</a></li>
+    	</ul>
       </div>
     </div>
 
@@ -168,15 +158,22 @@
 
 
 
-<div id="popupConnect">
+<div id="popupConnect" class="modal">
+	<div class="modal-header">
 		<a id="popupConnectClose">x</a>
-        <h3>Connecting to MtConnect Stream</h3>
-			Please enter the link to a mtconnect stream:			<br/>
-			<label>http://<input name="stream_name" type="text" id="stream_name" value="agent.mtconnect.org/current" size="30"><input type="submit" name="Sub_url" id="Sub_url" value="Submit" onClick="conn_url=document.getElementById('stream_name').value;disablePopup();"></label>
-	<br/>
-<br/>
+		<h3>Connecting to MtConnect Stream</h3>
+		<p>Please enter the link to a mtconnect stream:</p>
 	</div>
-    <div id="backgroundPopup"></div> 
+	<div class="modal-body">
+		<div class="form-inline">
+			<label>http:// <input name="stream_name" type="text" id="stream_name" value="agent.mtconnect.org/current" size="40"></label>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<input type="submit" name="Sub_url" id="Sub_url" value="Submit" class="btn btn-mini" onClick="conn_url=document.getElementById('stream_name').value;disablePopup();">
+	</div>
+</div>
+<div id="backgroundPopup"></div> 
 
 
     
